@@ -1,0 +1,19 @@
+{
+  "name": "Mi Fit - Gestor de Tallas",
+  "short_name": "MiFit",
+  "description": "Gestiona tus tallas y marcas de ropa favoritas",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#6C3CE1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "shopping"]
+}
