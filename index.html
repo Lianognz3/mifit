@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Mi Fit - Gestiona tus tallas y marcas de ropa favoritas. Nunca olvides qué talla te queda.">
+  <meta name="theme-color" content="#6C3CE1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MiFit">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-512.jpg">
+  <link rel="icon" type="image/jpeg" href="icons/icon-512.jpg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Mi Fit - Gestor de Tallas y Marcas</title>
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-top">
+        <div class="app-logo">
+          <img src="icons/icon-512.jpg" alt="MiFit" width="36" height="36">
+          <h1>MiFit</h1>
+        </div>
+        <div class="header-actions">
+          <button class="btn-icon" id="btn-export" title="Exportar datos">📤</button>
+          <button class="btn-icon" id="btn-import" title="Importar datos">📥</button>
+        </div>
+      </div>
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Buscar marca, modelo o talla...">
+      </div>
+    </header>
+
+    <!-- Install Banner -->
+    <div class="install-banner" id="install-banner">
+      <span class="install-icon">📲</span>
+      <div class="install-text">
+        <h4>Instalar MiFit</h4>
+        <p>Accede sin conexión desde tu pantalla de inicio</p>
+      </div>
+      <button class="btn-install" id="btn-install-app">Instalar</button>
+      <button class="btn-dismiss" id="btn-dismiss-install">✕</button>
+    </div>
+
+    <!-- Tab Navigation -->
+    <nav class="tab-nav" id="tab-nav">
+      <!-- Tabs rendered dynamically -->
+    </nav>
+
+    <!-- Content Area -->
+    <main class="content-area" id="content-area">
+      <!-- Content rendered dynamically -->
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-view="closet" id="nav-closet">
+        <span class="nav-icon">👔</span>
+        <span class="nav-label">Mi Closet</span>
+      </button>
+      <button class="nav-item" data-view="shopping" id="nav-shopping">
+        <span class="nav-icon">🛒</span>
+        <span class="nav-label">Compras</span>
+      </button>
+      <button class="nav-item-add" id="btn-add-item" title="Agregar prenda">+</button>
+      <button class="nav-item" data-view="stats" id="nav-stats">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Stats</span>
+      </button>
+      <button class="nav-item" data-view="settings" id="nav-settings">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Ajustes</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Modal: Add / Edit Item -->
+  <div class="modal-overlay" id="modal-item">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h2 class="modal-title" id="modal-item-title">Agregar Prenda</h2>
+      <form id="form-item">
+        <input type="hidden" id="item-edit-id">
+        <div class="form-group">
+          <label class="form-label" for="item-category">Categoría</label>
+          <select class="form-select" id="item-category" required>
+            <!-- Options rendered dynamically -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="item-brand">Marca</label>
+          <input class="form-input" type="text" id="item-brand" placeholder="Ej: Oggi Jeans" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="item-size">Talla</label>
+            <input class="form-input" type="text" id="item-size" placeholder="Ej: M, 30, 7.5">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="item-model">Modelo</label>
+            <input class="form-input" type="text" id="item-model" placeholder="Ej: Vaxter">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="item-color">Color</label>
+            <input class="form-input" type="text" id="item-color" placeholder="Ej: Negro">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="item-condition">Condición</label>
+            <input class="form-input" type="text" id="item-condition" placeholder="Ej: 73kg >">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="item-notes">Notas</label>
+          <input class="form-input" type="text" id="item-notes" placeholder="Notas adicionales...">
+        </div>
+        <div class="form-group">
+          <label class="form-checkbox">
+            <input type="checkbox" id="item-tobuy">
+            <span>🛒 Agregar a lista de compras</span>
+          </label>
+        </div>
+        <button type="submit" class="btn-primary" id="btn-submit-item">Guardar Prenda</button>
+        <button type="button" class="btn-secondary" id="btn-cancel-item">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Add Category -->
+  <div class="modal-overlay" id="modal-category">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <h2 class="modal-title">Gestionar Categorías</h2>
+      <div class="chips-container" id="category-chips">
+        <!-- Chips rendered dynamically -->
+      </div>
+      <form id="form-category">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="cat-name">Nueva categoría</label>
+            <input class="form-input" type="text" id="cat-name" placeholder="Ej: Sudadera">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cat-icon">Emoji</label>
+            <input class="form-input" type="text" id="cat-icon" placeholder="Ej: 🧥" maxlength="4">
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">Agregar Categoría</button>
+        <button type="button" class="btn-secondary" id="btn-close-category">Cerrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirm Dialog -->
+  <div class="confirm-dialog" id="confirm-dialog">
+    <div class="confirm-box">
+      <h3 id="confirm-title">¿Eliminar?</h3>
+      <p id="confirm-message">Esta acción no se puede deshacer.</p>
+      <div class="confirm-actions">
+        <button class="btn-cancel" id="btn-confirm-cancel">Cancelar</button>
+        <button class="btn-danger" id="btn-confirm-ok">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Hidden file input for import -->
+  <input type="file" id="file-import" accept=".json" style="display:none">
+
+  <script src="app.js"></script>
+</body>
+</html>
